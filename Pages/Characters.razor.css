@@ -1,0 +1,46 @@
+.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.list .item {
+    width: calc(50% - 10px);
+
+}
+
+.paginator {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.paginator .item {
+    padding: 5px 10px;
+    border: 1px solid #ededed;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.paginator .item:hover {
+    background-color: rgb(201, 161, 238);
+}
+
+.paginator .item.current {
+    background-color: rgb(201, 161, 238);
+}
+
+a {
+    text-decoration: none;
+    color: #3b3b3b;
+}

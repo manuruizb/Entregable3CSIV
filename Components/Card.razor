@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="image">
+        <img src="@image" alt="">
+    </div>
+    <div class="name">
+        <p>@name</p>
+    </div>
+</div>
+
+@code 
+{
+    [Parameter]
+    public string? image {get; set; }
+    [Parameter]
+    public string? name {get; set; }
+}

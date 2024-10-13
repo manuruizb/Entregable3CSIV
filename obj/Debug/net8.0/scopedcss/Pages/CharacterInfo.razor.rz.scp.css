@@ -1,0 +1,26 @@
+.details[b-tjr09w48ga] {
+    display: flex;
+    width: 100%;
+}
+
+.image[b-tjr09w48ga] {
+    width: 50%;
+    text-align: center;
+}
+
+.info[b-tjr09w48ga] {
+    width: 50%;
+}
+
+.info label[b-tjr09w48ga] {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info label p[b-tjr09w48ga] {
+    font-weight: 100;
+    margin: 0;
+    margin-left: 6px;
+}
+

@@ -1,0 +1,72 @@
+@page "/personajes"
+@inject HttpClient httpClient
+@using Entregable3.Dtos;
+@using Entregable3.Components
+
+<h1>Personajes</h1>
+
+@if (result != null && result.results != null)
+{
+    <ul class="list">
+        @foreach (CharacterDto item in result?.results!)
+        {
+            <li class="item">
+                <a href="/personaje/@item.id">
+                    <Card name=@item.name image=@item.image />
+                </a>
+            </li>
+        }
+    </ul>
+}
+<ul class="paginator">
+    <li class="item" @onclick="() => OnPaginate(currentPage - 1)">anterior</li>
+    @for (int i = 1; i <= result?.info?.pages; i++)
+    {
+        var index = i;
+        @if (currentPage == index)
+        {
+            <li class="item current" @onclick="() => OnPaginate(index)">@i</li>
+        }
+        else
+        {
+            <li class="item" @onclick="() => OnPaginate(index)">@i</li>
+        }
+
+    }
+    <li class="item" @onclick="() => OnPaginate(currentPage + 1)">siguiente</li>
+</ul>
+
+@code {
+    public ResultDto<List<CharacterDto>>? result;
+    public int currentPage = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            this.result = await httpClient.GetFromJsonAsync<ResultDto<List<CharacterDto>>>("character");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar los datos: {ex.Message}");
+        }
+    }
+
+    public async Task OnPaginate(int page)
+    {
+        try
+        {
+            if (page < 1 || page > result?.info?.pages)
+            {
+                return;
+            }
+            this.result = await httpClient.GetFromJsonAsync<ResultDto<List<CharacterDto>>>($"character?page={page}");
+            this.currentPage = page;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar los datos: {ex.Message}");
+        }
+    }
+
+}

@@ -1,0 +1,58 @@
+@page "/personaje/{id:int}"
+@using Entregable3.Dtos
+@inject HttpClient httpClient
+
+<h1>Detalles</h1>
+
+<div class="details">
+    <div class="info">
+        <label>Nombre: 
+            <p>@character.name</p>
+        </label>
+        <label>Estado: 
+            <p>@character.status</p>
+        </label>
+        <label>Especie: 
+            <p>@character.species</p>
+        </label>
+        <label>Tipo: 
+            <p>@(character.type == string.Empty ? "Ninguno" : character.type)</p>
+        </label>
+        <label>Género: 
+            <p>@character.gender</p>
+        </label>
+        <h3 class="mt-5">Locación</h3>
+        <label>Nombre: 
+            <p>@character.location.name</p>
+        </label>
+        <label>Tipo: 
+            <p>@character.location.type</p>
+        </label>
+        <label>Dimensión: 
+            <p>@character.location.dimension</p>
+        </label>
+    </div>
+    <div class="image">
+        <img src="@character.image" alt="">
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int id {get; set; }
+    public CharacterDto character;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            this.character = await httpClient.GetFromJsonAsync<CharacterDto>($"character/{this.id}");
+            this.character.location = await httpClient.GetFromJsonAsync<LocationDto>(this.character.location.url);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar los datos: {ex.Message}");
+        }
+    }
+    
+}

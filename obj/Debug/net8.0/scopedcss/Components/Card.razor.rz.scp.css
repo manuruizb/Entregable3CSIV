@@ -1,0 +1,28 @@
+.card[b-9njzijonjb] {
+    border: 1px solid #ededed;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    align-items: center;
+}
+
+.image[b-9njzijonjb] {
+    width: 110px;
+    overflow: hidden;
+}
+
+.image img[b-9njzijonjb] {
+    width: 100%;
+}
+
+.name[b-9njzijonjb] {
+    padding-left: 15px;
+    font-size: 35px;
+    width: calc(100% - 110px);
+}
+
+p[b-9njzijonjb] {
+    margin: 0;
+}
