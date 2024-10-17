@@ -5,26 +5,33 @@
 
 <h1>Personajes</h1>
 
+@* Se comienza con un if, por si no trae nada, por si llega vacio. *@
 @if (result != null && result.results != null)
 {
+    @* Se crea un ciclo para listar los personajes *@
     <ul class="list">
         @foreach (CharacterDto item in result?.results!)
         {
             <li class="item">
+                @* Enlace al detalle o la información del personaje *@
                 <a href="/personaje/@item.id">
+                @* Se llama el componente, que es la tarjeta del personaje *@
                     <Card name=@item.name image=@item.image />
                 </a>
             </li>
         }
     </ul>
 }
+@* Html para el paginador, la API ya viene paginada, solo se crea la vista *@
 <ul class="paginator">
+    @* Le resta una página a la página actual *@
     <li class="item" @onclick="() => OnPaginate(currentPage - 1)">anterior</li>
     @for (int i = 1; i <= result?.info?.pages; i++)
     {
         var index = i;
         @if (currentPage == index)
         {
+            @* Se crea este if, para que el número de página que este activo, se pinte de otro color, se organiza con css *@
             <li class="item current" @onclick="() => OnPaginate(index)">@i</li>
         }
         else
@@ -33,6 +40,7 @@
         }
 
     }
+    @* Le suma una página a la página actual *@
     <li class="item" @onclick="() => OnPaginate(currentPage + 1)">siguiente</li>
 </ul>
 
@@ -44,6 +52,7 @@
     {
         try
         {
+            @* Consumimos el endpoint de todos los personajes*@
             this.result = await httpClient.GetFromJsonAsync<ResultDto<List<CharacterDto>>>("character");
         }
         catch (Exception ex)
@@ -56,10 +65,12 @@
     {
         try
         {
+            @* No hace nada si ya llega a los límites de paginación, para que no explote, buscando páginas que no existen *@
             if (page < 1 || page > result?.info?.pages)
             {
                 return;
             }
+            @* Se consume el endpoint de la paginación, enviándole la página donde se encuentra o la que se necesita *@
             this.result = await httpClient.GetFromJsonAsync<ResultDto<List<CharacterDto>>>($"character?page={page}");
             this.currentPage = page;
         }

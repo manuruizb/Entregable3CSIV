@@ -4,6 +4,7 @@
 
 <h1>Detalles</h1>
 
+@* Html de lo que mostrará esta página *@
 <div class="details">
     <div class="info">
         <label>Nombre: 
@@ -46,6 +47,7 @@
     {
         try
         {
+            @* Consumimos los endpoints de los personajes (por id) y de la locación *@
             this.character = await httpClient.GetFromJsonAsync<CharacterDto>($"character/{this.id}");
             this.character.location = await httpClient.GetFromJsonAsync<LocationDto>(this.character.location.url);
         }
